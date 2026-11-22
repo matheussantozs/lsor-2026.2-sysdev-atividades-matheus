@@ -1,4 +1,9 @@
-A Maquina virtual foi instalada conforme o pdf com as instruções, não tirei muitas prints porque quando o modelo de respostas da atividade foi proposto, todo o processo de instalação da maquina virtual já havia sido concluído.
-Informações: ![Informações da maquina virtual](imagens/aula-1.png)
-Dados do sistema: ![Informações da maquina virtual](imagens/aula11.png)
+## Instalação da Máquina Virtual
 
+> **Observação:** A máquina virtual foi instalada conforme o PDF de instruções. Como o modelo de respostas da atividade foi disponibilizado após a conclusão da instalação, os prints abaixo registram apenas o ambiente já configurado.
+
+### Informações da Máquina Virtual
+![Informações da máquina virtual](imagens/aula-1.png)
+
+### Dados do Sistema
+![Dados do sistema](imagens/aula11.png)
