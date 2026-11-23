@@ -32,8 +32,3 @@ Este repositório tem como objetivo centralizar o versionamento e a entrega das 
 ```
 
 ---
-
-## 📌 Status do Projeto
-
-- [x] Configuração inicial do repositório
-- [ ] Upload das primeiras atividades
