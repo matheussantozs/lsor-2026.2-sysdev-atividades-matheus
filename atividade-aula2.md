@@ -14,9 +14,9 @@ Para simular os diferentes perfis de acesso exigidos no laboratório, foram cria
 
 * **Como foi obtido:** Execução sequencial de `sudo adduser` para `fulano` (UID/GID `1001`), `cicrano` (UID/GID `1002`), `beltrano` e `novato` (UID/GID `1004`), confirmando os dados padrão ao final de cada criação.
 
-![Criação dos usuários fulano e cicrano via comando adduser no terminal](imagens/criar.png)
+![Criação dos usuários fulano e cicrano via comando adduser no terminal](Imagens/criar.png)
 
-![Finalização do cadastro de beltrano e criação do usuário novato via adduser](imagens/criar2.png)
+![Finalização do cadastro de beltrano e criação do usuário novato via adduser](Imagens/criar2.png)
 
 ---
 
@@ -26,7 +26,7 @@ Em seguida, foi criado o grupo departamental que centralizará as permissões de
 
 * **Como foi obtido:** Executou-se `sudo groupadd financeiro` para registrar o novo grupo no sistema (`/etc/group`). A validação foi feita com `getent group financeiro`, que consultou a base de grupos do sistema e retornou `financeiro:x:1005:`, confirmando a criação com o **GID 1005**. *(Nota: na sequência imediata, o comando `sudo usermod -aG cicrano` foi executado sem informar o nome do grupo, fazendo o terminal exibir a documentação de sintaxe do comando).*
 
-![Criação do grupo financeiro com groupadd e validação do GID 1005 com getent](imagens/grupo.png)
+![Criação do grupo financeiro com groupadd e validação do GID 1005 com getent](Imagens/grupo.png)
 
 ---
 
@@ -39,7 +39,7 @@ Com o grupo criado, os usuários `cicrano` e `beltrano` foram adicionados ao gru
   * `sudo mkdir -p /srv/financeiro`: cria o diretório alvo dentro de `/srv`.
   * `ls -ld /srv/financeiro`: exibe os metadados do diretório recém-criado, mostrando inicialmente o dono padrão `root:root` e permissões `drwxr-xr-x` (`755`).
 
-![Associação de cicrano e beltrano ao grupo financeiro e criação da pasta /srv/financeiro](imagens/pastacomp.png)
+![Associação de cicrano e beltrano ao grupo financeiro e criação da pasta /srv/financeiro](Imagens/pastacomp.png)
 
 ---
 
@@ -52,7 +52,7 @@ Para restringir o acesso exclusivamente ao `administrador` e aos membros do grup
   * `sudo chmod 2770 /srv/financeiro`: aplica o bit especial **SGID (`2`)**, permissão total (`7` = `rwx`) para o dono e para o grupo, e bloqueio total (`0` = `---`) para outros usuários.
   * `ls -ld /srv/financeiro`: confirma a aplicação na saída `drwxrws--- 2 administrador financeiro`, onde o caractere `s` no lugar do `x` do grupo indica que o **SGID** está ativo (novos arquivos herdarão automaticamente o grupo `financeiro`) e `---` garante que terceiros não têm qualquer acesso.
 
-![Alteração de posse para administrador:financeiro e aplicação da permissão 2770](imagens/permisoes.png)
+![Alteração de posse para administrador:financeiro e aplicação da permissão 2770](Imagens/permisoes.png)
 
 ---
 
@@ -64,19 +64,19 @@ Para comprovar o funcionamento das regras de segurança, foram realizadas sessõ
 
 * **Como foi obtido:** Autenticado como `cicrano`, executou-se `echo "Relatorio financeiro - Versão 1" > /srv/financeiro/relatorioo.txt` para criar o arquivo e, em seguida, `echo "alteração financeiro - cicrano" > /srv/financeiro/relatorioo.txt` para modificar seu conteúdo. A leitura com `cat /srv/financeiro/relatorioo.txt` exibiu `alteração financeiro - cicrano`, comprovando que membros do grupo `financeiro` possuem permissão de criação, edição e leitura na pasta.
 
-![Teste de criação, alteração e leitura de relatório realizado com sucesso por cicrano](imagens/teste1.png)
+![Teste de criação, alteração e leitura de relatório realizado com sucesso por cicrano](Imagens/teste1.png)
 
 #### 5.2. Teste com `fulano` (Membro do grupo `devs` — Acesso Negado)
 
 * **Como foi obtido:** Utilizou-se `su - fulano` para abrir uma sessão de login limpa com as credenciais de `fulano`. Ao tentar listar o diretório (`ls /srv/financeiro`) e criar um arquivo (`touch /srv/financeiro/teste_fulano.txt`), o sistema retornou `Permission denied` em ambos os comandos, pois `fulano` pertence ao grupo `devs` e recai na categoria *Outros* (`---`).
 
-![Bloqueio com Permission denied ao tentar listar e criar arquivos usando o usuário fulano](imagens/teste2.png)
+![Bloqueio com Permission denied ao tentar listar e criar arquivos usando o usuário fulano](Imagens/teste2.png)
 
 #### 5.3. Teste com `novato` (Usuário sem vínculo ao grupo — Acesso Negado)
 
 * **Como foi obtido:** Utilizou-se `su - novato` para assumir a sessão do usuário `novato`. Tanto a tentativa de listagem (`ls /srv/financeiro`) quanto a tentativa de leitura direta (`cat /srv/financeiro/relatorio.txt`) resultaram em `Permission denied`, validando o isolamento completo do diretório.
 
-![Bloqueio com Permission denied ao tentar listar e ler arquivos usando o usuário novato](imagens/teste3.png)
+![Bloqueio com Permission denied ao tentar listar e ler arquivos usando o usuário novato](Imagens/teste3.png)
 
 ---
 
